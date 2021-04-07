@@ -11,26 +11,30 @@ export default class Task2 extends React.Component {
     };
   }
 
-  show() {
+  show = () => {
     this.setState({
       showModal: true
     });
-  }
+  };
 
-  hide() {
+  hide = () => {
     this.setState({
       showModal: false
     });
-  }
+  };
 
   render() {
     return (
       <div>
-        <button onClick={this.show.bind(this)}>Click here</button>
+        <button onClick={this.show}>Click here</button>
         <br />
-        <Modal result={this.state.showModal}>
+        <Modal
+          result={this.state.showModal}
+          resultM={this.state.showModal}
+          click={this.hide}
+        >
           <span className="text">Hello {""}</span>
-          <CloseButton handleClose={this.hide.bind(this)} />
+          <CloseButton handleClose={this.hide} />
         </Modal>
       </div>
     );

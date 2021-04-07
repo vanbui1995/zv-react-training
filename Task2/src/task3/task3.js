@@ -9,24 +9,20 @@ export default class Task3 extends React.Component {
     this.state = {
       value: "",
       showDialog: false,
-      message: ""
+      message: "",
+      showHide: true
     };
-    this.change = this.change.bind(this);
-    this.setCount = this.setCount.bind(this);
-    this.stopNumber = this.stopNumber.bind(this);
-    this.showDialog = this.showDialog.bind(this);
-    this.hideDialog = this.hideDialog.bind(this);
   }
 
-  change(e) {
+  change = (e) => {
     this.setState({
       value: e.target.value
     });
-  }
+  };
 
-  setCount() {}
+  setCount = () => {};
 
-  showDialog(e) {
+  showDialog = (e) => {
     e.preventDefault();
     this.setState({
       showDialog: true
@@ -60,27 +56,44 @@ export default class Task3 extends React.Component {
             message: --input
           });
         }
-      }, 1000);
+      }, 500);
     }
-  }
+  };
 
-  hideDialog() {
+  hideDialog = () => {
     clearInterval(this.setCount);
     this.setState({
       showDialog: false,
       message: ""
     });
-  }
+  };
 
   //stop decrease number
-  stopNumber() {
+  stopNumber = () => {
+    this.setState({
+      showHide: false
+    });
     clearInterval(this.setCount);
-  }
+  };
+
+  resumeNumber = () => {
+    this.setState({
+      showHide: true
+    });
+    let input = this.state.message;
+    this.setCount = setInterval(() => {
+      if (input > 0) {
+        this.setState({
+          message: --input
+        });
+      }
+    }, 500);
+  };
 
   //focus
-  // componentDidMount() {
-  //   this.ref.current.focus();
-  // }
+  componentDidMount() {
+    this.ref.current.focus();
+  }
 
   render() {
     return (
@@ -92,6 +105,8 @@ export default class Task3 extends React.Component {
           hide={this.hideDialog} //show
           show={this.showDialog} //hide
           stop={this.stopNumber} //stop derease
+          resume={this.resumeNumber} //resume derease
+          showHide={this.state.showHide}
         />
       </div>
     );
